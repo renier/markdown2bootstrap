@@ -39,7 +39,7 @@ converter.hooks.set("postConversion", function(text) {
         });
 
         return "<h" + p2 + ' id="' + nextId + '">' + levelStr;
-    });
+    }).replace(/<pre>/g, '<pre class="prettyprint">');
 });
 
 output = converter.makeHtml(md);
