@@ -1,0 +1,20 @@
+{
+  "name": "markdown2bootstrap",
+  "version": "0.0.1",
+  "author": "Renier Morales <renier@morales-rodriguez.net>",
+  "description": "markdown to html bootstrap page converter",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/renier/markdown2bootstrap.git"
+  },
+  "keywords": [
+    "markdown", "bootstrap"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/renier/markdown2bootstrap/issues",
+  "homepage": "http://github.com/renier/markdown2bootstrap",
+  "bin": "./markdown2bootstrap.js",
+  "dependencies": {
+    "pagedown": "1.0.0"
+  }
+}
