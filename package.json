@@ -15,6 +15,7 @@
   "homepage": "http://github.com/renier/markdown2bootstrap",
   "bin": "./markdown2bootstrap.js",
   "dependencies": {
-    "pagedown": "1.0.0"
+    "pagedown": "1.0.x",
+    "optimist": "0.3.x"
   }
 }

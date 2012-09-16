@@ -1,16 +1,15 @@
-var pagedown = require('pagedown'),
+#!/usr/bin/env node
+var argv = require('optimist').
+        usage('Usage: $0 <doc.md>').
+        demand(1).
+        argv,
+    pagedown = require('pagedown'),
     converter = new pagedown.Converter(),
     path = require('path'),
     fs = require('fs'),
     md, levels = {}, output, nextId = 0, toc = [], tocHtml = "";
 
-if (process.argv.length < 3 || !fs.existsSync(process.argv[2])) {
-    console.log("Usage: " + process.argv[0] + " " +
-            path.basename(process.argv[1])  + " <filename>");
-    process.exit();
-}
-
-md = fs.readFileSync(process.argv[process.argv.length-1]).toString();
+md = fs.readFileSync(argv._[0]).toString();
 
 // Add sections
 converter.hooks.set("postConversion", function(text) {
