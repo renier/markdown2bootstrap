@@ -770,7 +770,7 @@ form.bs-docs-example {
      -moz-border-radius: 0 0 6px 6px;
           border-radius: 0 0 6px 6px;
 }
-/*
+
 .bs-docs-sidenav > .active > a {
   position: relative;
   z-index: 2;
@@ -781,7 +781,7 @@ form.bs-docs-example {
      -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
-*/
+
 /* Chevrons */
 .bs-docs-sidenav .icon-chevron-right {
   float: right;
@@ -795,13 +795,13 @@ form.bs-docs-example {
 .bs-docs-sidenav a:hover .icon-chevron-right {
   opacity: .5;
 }
-/*
+
 .bs-docs-sidenav .active .icon-chevron-right,
 .bs-docs-sidenav .active a:hover .icon-chevron-right {
   background-image: url(../img/glyphicons-halflings-white.png);
   opacity: 1;
 }
-*/
+
 .bs-docs-sidenav.affix {
   top: 40px;
 }
