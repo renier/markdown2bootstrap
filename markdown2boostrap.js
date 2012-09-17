@@ -23,17 +23,21 @@ md = fs.readFileSync(argv._[0]).toString();
 converter.hooks.set("postConversion", function(text) {
     return text.replace(/<(h(\d))>/g, function(match, p1, p2, offset, str) {
         var i, levelStr = "";
+
         levels[p1] = levels[p1] || 0;
         
         // Figure out section number
 	if (!argv.n) {
             // reset lower levels
-            for (i = p2 + 1; levels["h"+i]; i++) {
+            //console.log(p2, p2 + 1, levels["h"+ (p2 + 1)]);
+            //console.log(JSON.stringify(levels));
+            for (i = Number(p2) + 1; levels["h"+i]; i++) {
                 levels["h"+i] = 0;
+                console.log("this code is not getting called");
             }
 	
             // grab higher levels
-            for (i = p2 - 1; levels["h"+i]; i--) {
+            for (i = Number(p2) - 1; levels["h"+i]; i--) {
                 levelStr = levels["h"+i] + "." + levelStr;
             }
         
