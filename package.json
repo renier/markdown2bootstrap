@@ -1,6 +1,6 @@
 {
   "name": "markdown2bootstrap",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": "Renier Morales <renier@morales-rodriguez.net>",
   "description": "markdown to html bootstrap page converter",
   "repository": {

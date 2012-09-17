@@ -29,11 +29,8 @@ converter.hooks.set("postConversion", function(text) {
         // Figure out section number
 	if (!argv.n) {
             // reset lower levels
-            //console.log(p2, p2 + 1, levels["h"+ (p2 + 1)]);
-            //console.log(JSON.stringify(levels));
             for (i = Number(p2) + 1; levels["h"+i]; i++) {
                 levels["h"+i] = 0;
-                console.log("this code is not getting called");
             }
 	
             // grab higher levels
