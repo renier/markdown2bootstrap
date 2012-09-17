@@ -73,7 +73,7 @@ output =
         } else {
             return "";
         }
-    }).replace(/{{title}}/, argv.title) +
+    }).replace(/{{title}}/, argv.title === "TITLE HERE" ? "" : argv.title) +
     tocHtml +
     output +
     fs.readFileSync("parts/bottom.html").toString();

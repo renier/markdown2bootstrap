@@ -15,4 +15,4 @@ You can also turn on a boostrap page header by passing `-h`. You will need to pa
 
 	$ node_modules/.bin/markdown2bootstrap -h --title Documentation --subtitle "For users"  doc.md > doc.html
 
-You can pass `--title` as an option to give the webpage a proper html title.
+You should pass `--title` as an option to give the webpage a proper html title.
