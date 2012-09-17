@@ -12,7 +12,7 @@
 
 body {
   position: relative;
-  padding-top: 40px;
+  /*padding-top: 40px;*/
 }
 
 /* Code in headings */
@@ -111,6 +111,10 @@ hr.soften {
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
+  color: white;
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin: 10px 0;
 }
 .jumbotron p {
   font-size: 24px;

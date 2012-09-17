@@ -1,7 +1,15 @@
 #!/usr/bin/env node
 var argv = require('optimist').
-        usage('Usage: $0 <doc.md>').
+        usage('Usage: $0 [options] <doc.md>').
         demand(1).
+        boolean('n').
+        describe('n', 'Turn off numbered sections').
+        boolean('h').
+        describe('h', 'Turn on bootstrap page header.').
+        describe('title', 'Set a title for the page.').
+        default('title', 'TITLE HERE').
+        describe('subtitle', 'Set a subtitle for the page header.').
+        default('subtitle', 'SUBTITLE HERE').
         argv,
     pagedown = require('pagedown'),
     converter = new pagedown.Converter(),
@@ -17,18 +25,21 @@ converter.hooks.set("postConversion", function(text) {
         var i, levelStr = "";
         levels[p1] = levels[p1] || 0;
         
-        // reset lower levels
-        for (i = p2 + 1; levels["h"+i]; i++) {
-            levels["h"+i] = 0;
-        }
-
-        // grab higher levels
-        for (i = p2 - 1; levels["h"+i]; i--) {
-            levelStr = levels["h"+i] + "." + levelStr;
-        }
+        // Figure out section number
+	if (!argv.n) {
+            // reset lower levels
+            for (i = p2 + 1; levels["h"+i]; i++) {
+                levels["h"+i] = 0;
+            }
+	
+            // grab higher levels
+            for (i = p2 - 1; levels["h"+i]; i--) {
+                levelStr = levels["h"+i] + "." + levelStr;
+            }
         
-        levels[p1] = levels[p1] + 1;
-        levelStr = levelStr + levels[p1] + ". ";
+            levels[p1] = levels[p1] + 1;
+            levelStr = levelStr + levels[p1] + ". ";
+        }
 
         // Add toc entry
         toc.push({
@@ -52,9 +63,19 @@ tocHtml += '</ul></div><div class="span9">';
 
 // Bootstrap-fy
 output = 
-    fs.readFileSync("parts/top.html") +
+    fs.readFileSync("parts/top.html").toString().replace(/{{header}}/, function() {
+        if (argv.h) {
+            return '<header class="jumbotron subhead" id="overview">' +
+                   '<div class="container">' +
+                   '<h1>' + argv.title  + '</h1>' +
+                   '<p class="lead">' + argv.subtitle + '</p>' +
+                   '</div></header>';
+        } else {
+            return "";
+        }
+    }).replace(/{{title}}/, argv.title) +
     tocHtml +
     output +
-    fs.readFileSync("parts/bottom.html");
+    fs.readFileSync("parts/bottom.html").toString();
 
 console.log(output);
