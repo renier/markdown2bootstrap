@@ -64,7 +64,7 @@ tocHtml += '</ul></div><div class="span9">';
 
 // Bootstrap-fy
 output = 
-    fs.readFileSync("parts/top.html").toString().replace(/{{header}}/, function() {
+    fs.readFileSync(__dirname + "/parts/top.html").toString().replace(/{{header}}/, function() {
         if (argv.h) {
             return '<header class="jumbotron subhead" id="overview">' +
                    '<div class="container">' +
@@ -77,6 +77,6 @@ output =
     }).replace(/{{title}}/, argv.title === "TITLE HERE" ? "" : argv.title) +
     tocHtml +
     output +
-    fs.readFileSync("parts/bottom.html").toString();
+    fs.readFileSync(__dirname + "/parts/bottom.html").toString();
 
 console.log(output);
