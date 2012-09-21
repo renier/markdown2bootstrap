@@ -17,5 +17,13 @@
   "dependencies": {
     "pagedown": "1.0.x",
     "optimist": "0.3.x"
-  }
+  },
+  "files": [ 
+    "bootstrap",
+    "LICENSE",
+    "markdown2bootstrap.js",
+    "package.json",
+    "parts",
+    "README.md"
+  ]
 }
