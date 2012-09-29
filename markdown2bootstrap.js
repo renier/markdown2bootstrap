@@ -1,38 +1,33 @@
 #!/usr/bin/env node
 /*jshint node:true, es5:true */
 var argv = require('optimist').
-        usage('Usage: $0 [options] <doc.md>').
+        usage('Usage: $0 [options] <doc.md ...>').
         demand(1).
         boolean('n').
         describe('n', 'Turn off numbered sections').
         boolean('h').
         describe('h', 'Turn on bootstrap page header.').
+        describe('outputdir', 'Directory to put the converted files in.').
+        default('outputdir', '.').
         argv,
     pagedown = require('pagedown'),
     converter = new pagedown.Converter(),
     path = require('path'),
-    fs = require('fs'),
-    md, levels = {}, output, nextId = 0, toc = [], tocHtml = "";
+    fs = require('fs'), levels, toc, nextId;
 
-md = fs.readFileSync(argv._[0]).toString();
 
-function findTag(tag, obj) {
+
+function findTag(md, tag, obj) {
     var re = new RegExp("^<!-- " + tag + ": (.+) -->", "m"), match = md.match(re);
 
     if (!obj) { return; }
 
     if (match) {
         obj[tag] = match[1];
-    } else {
-        obj[tag] = tag.toUpperCase() + " HERE";
     }
 }
 
-// Find title and subtitle tags in document
-findTag("title", argv);
-findTag("subtitle", argv);
-
-// Add sections
+// Configure section and toc generation
 converter.hooks.set("postConversion", function(text) {
     return text.replace(/<(h(\d))>/g, function(match, p1, p2, offset, str) {
         var i, levelStr = "";
@@ -66,30 +61,56 @@ converter.hooks.set("postConversion", function(text) {
     }).replace(/<pre>/g, '<pre class="prettyprint">');
 });
 
-output = converter.makeHtml(md);
+// Create output directory
+if (!fs.existsSync('html')) {
+    fs.mkdirSync('html');
+}
 
-// Add table of contents
-tocHtml += '<div class="span3 bs-docs-sidebar"><ul class="nav nav-list bs-docs-sidenav" data-spy="affix">';
-toc.forEach(function(entry) {
-    tocHtml += '<li><a href="#' + entry.id + '">' + entry.levelStr + entry.title + '</a></li>';
+argv._.forEach(function(md_path) {
+    var tags = { title: "TITLE HERE", subtitle: "SUBTITLE HERE" },
+        md, output, tocHtml = "",
+        output_path = path.join(argv.outputdir, path.basename(md_path));
+
+    // Determine output filename
+    if (/\.md$/.test(output_path)) {
+        output_path = output_path.slice(0, -3);
+    }
+    output_path += '.html';
+
+    // Read markdown in
+    md = fs.readFileSync(md_path).toString();
+
+    // Find title and subtitle tags in document
+    findTag(md, "title", tags);
+    findTag(md, "subtitle", tags);
+
+    levels = {}; nextId = 0; toc = [];
+    output = converter.makeHtml(md);
+
+    // Add table of contents
+    tocHtml += '<div class="span3 bs-docs-sidebar"><ul class="nav nav-list bs-docs-sidenav" data-spy="affix">';
+    toc.forEach(function(entry) {
+        tocHtml += '<li><a href="#' + entry.id + '">' + entry.levelStr + entry.title + '</a></li>';
+    });
+    tocHtml += '</ul></div><div class="span9">';
+
+    // Bootstrap-fy
+    output = 
+        fs.readFileSync(__dirname + "/parts/top.html").toString().replace(/\{\{header\}\}/, function() {
+            if (argv.h) {
+                return '<header class="jumbotron subhead" id="overview">' +
+                       '<div class="container">' +
+                       '<h1>' + tags.title  + '</h1>' +
+                       '<p class="lead">' + tags.subtitle + '</p>' +
+                       '</div></header>';
+            } else {
+                return "";
+            }
+        }).replace(/\{\{title\}\}/, tags.title === "TITLE HERE" ? "" : tags.title) +
+        tocHtml +
+        output +
+        fs.readFileSync(__dirname + "/parts/bottom.html").toString();
+
+    fs.writeFileSync(output_path, output);
+    console.log("Converted " + md_path + " to " + output_path);
 });
-tocHtml += '</ul></div><div class="span9">';
-
-// Bootstrap-fy
-output = 
-    fs.readFileSync(__dirname + "/parts/top.html").toString().replace(/\{\{header\}\}/, function() {
-        if (argv.h) {
-            return '<header class="jumbotron subhead" id="overview">' +
-                   '<div class="container">' +
-                   '<h1>' + argv.title  + '</h1>' +
-                   '<p class="lead">' + argv.subtitle + '</p>' +
-                   '</div></header>';
-        } else {
-            return "";
-        }
-    }).replace(/\{\{title\}\}/, argv.title === "TITLE HERE" ? "" : argv.title) +
-    tocHtml +
-    output +
-    fs.readFileSync(__dirname + "/parts/bottom.html").toString();
-
-console.log(output);
