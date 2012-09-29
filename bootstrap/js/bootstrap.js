@@ -2015,6 +2015,8 @@
         , data = $spy.data()
 
       data.offset = data.offset || {}
+      data.offset.bottom = 0
+      data.offset.top = $spy.offset().top - 71
 
       data.offsetBottom && (data.offset.bottom = data.offsetBottom)
       data.offsetTop && (data.offset.top = data.offsetTop)

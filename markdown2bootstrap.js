@@ -56,7 +56,7 @@ converter.hooks.set("postConversion", function(text) {
 output = converter.makeHtml(md);
 
 // Add table of contents
-tocHtml += '<div class="span3 bs-docs-sidebar"><ul class="nav nav-list bs-docs-sidenav">';
+tocHtml += '<div class="span3 bs-docs-sidebar"><ul class="nav nav-list bs-docs-sidenav" data-spy="affix">';
 toc.forEach(function(entry) {
     tocHtml += '<li><a href="#' + entry.id + '">' + entry.levelStr + entry.title + '</a></li>';
 });
