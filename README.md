@@ -1,3 +1,5 @@
+<!-- title: markdown2bootstrap.js -->
+<!-- subtitle: Converts a markdown document to an html web page using bootstrap styling. -->
 # Description
 
 Converts a markdown file to a bootstrap-styled web page with a table of contents. It will figure out sections based on the headings used and calculate section numbers.
@@ -15,8 +17,9 @@ Now open `doc.html` in a web browser. You will notice that section numbers are a
 
 	$ node_modules/.bin/markdown2bootstrap -n doc.md > doc.html
 
-You can also turn on a boostrap page header by passing `-h`. You will need to pass a title (`--title`) string and a subtitle (`--subtitle`) string:
+You can also turn on a bootstrap page header by passing `-h`. The header uses a title and a subtitle. You can specify them in the markdown document like this:
 
-	$ node_modules/.bin/markdown2bootstrap -h --title Documentation --subtitle "For users"  doc.md > doc.html
+        <!-- title: This is a title -->
+        <!-- subtitle: This is a subtitle -->
 
-You should pass `--title` as an option to give the webpage a proper html title.
+You should at least specify a title to give the webpage a proper html `<title>` tag.

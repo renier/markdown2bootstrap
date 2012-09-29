@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/*jshint node:true, es5:true */
 var argv = require('optimist').
         usage('Usage: $0 [options] <doc.md>').
         demand(1).
@@ -6,10 +7,6 @@ var argv = require('optimist').
         describe('n', 'Turn off numbered sections').
         boolean('h').
         describe('h', 'Turn on bootstrap page header.').
-        describe('title', 'Set a title for the page.').
-        default('title', 'TITLE HERE').
-        describe('subtitle', 'Set a subtitle for the page header.').
-        default('subtitle', 'SUBTITLE HERE').
         argv,
     pagedown = require('pagedown'),
     converter = new pagedown.Converter(),
@@ -18,6 +15,22 @@ var argv = require('optimist').
     md, levels = {}, output, nextId = 0, toc = [], tocHtml = "";
 
 md = fs.readFileSync(argv._[0]).toString();
+
+function findTag(tag, obj) {
+    var re = new RegExp("^<!-- " + tag + ": (.+) -->", "m"), match = md.match(re);
+
+    if (!obj) { return; }
+
+    if (match) {
+        obj[tag] = match[1];
+    } else {
+        obj[tag] = tag.toUpperCase() + " HERE";
+    }
+}
+
+// Find title and subtitle tags in document
+findTag("title", argv);
+findTag("subtitle", argv);
 
 // Add sections
 converter.hooks.set("postConversion", function(text) {
@@ -64,7 +77,7 @@ tocHtml += '</ul></div><div class="span9">';
 
 // Bootstrap-fy
 output = 
-    fs.readFileSync(__dirname + "/parts/top.html").toString().replace(/{{header}}/, function() {
+    fs.readFileSync(__dirname + "/parts/top.html").toString().replace(/\{\{header\}\}/, function() {
         if (argv.h) {
             return '<header class="jumbotron subhead" id="overview">' +
                    '<div class="container">' +
@@ -74,7 +87,7 @@ output =
         } else {
             return "";
         }
-    }).replace(/{{title}}/, argv.title === "TITLE HERE" ? "" : argv.title) +
+    }).replace(/\{\{title\}\}/, argv.title === "TITLE HERE" ? "" : argv.title) +
     tocHtml +
     output +
     fs.readFileSync(__dirname + "/parts/bottom.html").toString();

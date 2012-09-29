@@ -807,7 +807,7 @@ form.bs-docs-example {
 }
 
 .bs-docs-sidenav.affix {
-  top: 41px;
+  top: 0px;
 }
 .bs-docs-sidenav.affix-bottom {
   position: absolute;
