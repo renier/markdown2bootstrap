@@ -13,9 +13,10 @@ var argv = require('optimist').
     pagedown = require('pagedown'),
     converter = new pagedown.Converter(),
     path = require('path'),
-    fs = require('fs'), levels, toc, nextId;
-
-
+    fs = require('fs'),
+    top_part = fs.readFileSync(__dirname + "/parts/top.html").toString(),
+    bottom_part = fs.readFileSync(__dirname + "/parts/bottom.html").toString(),
+    levels, toc, nextId;
 
 function findTag(md, tag, obj) {
     var re = new RegExp("^<!-- " + tag + ": (.+) -->", "m"), match = md.match(re);
@@ -96,7 +97,7 @@ argv._.forEach(function(md_path) {
 
     // Bootstrap-fy
     output = 
-        fs.readFileSync(__dirname + "/parts/top.html").toString().replace(/\{\{header\}\}/, function() {
+        top_part.replace(/\{\{header\}\}/, function() {
             if (argv.h) {
                 return '<header class="jumbotron subhead" id="overview">' +
                        '<div class="container">' +
@@ -109,7 +110,7 @@ argv._.forEach(function(md_path) {
         }).replace(/\{\{title\}\}/, tags.title === "TITLE HERE" ? "" : tags.title) +
         tocHtml +
         output +
-        fs.readFileSync(__dirname + "/parts/bottom.html").toString();
+        bottom_part;
 
     fs.writeFileSync(output_path, output);
     console.log("Converted " + md_path + " to " + output_path);
