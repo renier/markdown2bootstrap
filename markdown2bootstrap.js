@@ -63,8 +63,9 @@ converter.hooks.set("postConversion", function(text) {
 });
 
 // Create output directory
-if (!fs.existsSync('html')) {
-    fs.mkdirSync('html');
+argv.outputdir = path.resolve(process.cwd(), argv.outputdir);
+if (!fs.existsSync(argv.outputdir)) {
+    fs.mkdirSync(argv.outputdir);
 }
 
 argv._.forEach(function(md_path) {
@@ -113,5 +114,5 @@ argv._.forEach(function(md_path) {
         bottom_part;
 
     fs.writeFileSync(output_path, output);
-    console.log("Converted " + md_path + " to " + output_path);
+    console.log("Converted " + md_path + " to " + path.relative(process.cwd(), output_path));
 });
