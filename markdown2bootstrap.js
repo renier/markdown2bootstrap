@@ -59,7 +59,11 @@ converter.hooks.set("postConversion", function(text) {
         });
 
         return "<h" + p2 + ' id="' + nextId + '">' + levelStr;
-    }).replace(/<pre>/g, '<pre class="prettyprint">');
+    }).
+    replace(/<pre>/g, '<pre class="prettyprint">').
+    replace(/".*mailto%3a(.*)"/, function(match, p1) {
+        return "\"mailto:" + p1  + "\"";
+    });
 });
 
 // Create output directory
