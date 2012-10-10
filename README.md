@@ -6,11 +6,11 @@ Converts a markdown file to a bootstrap-styled web page with a table of contents
 
 From this:
 
-![Markdown file](images/markdown.png)
+![Markdown file](https://raw.github.com/renier/markdown2bootstrap/master/images/markdown.png)
 
 To this:
 
-![Bootstrap web page](images/bootstrap.png)
+![Bootstrap web page](https://raw.github.com/renier/markdown2bootstrap/master/images/bootstrap.png)
 
 # Installing
 
