@@ -24,6 +24,7 @@
     "markdown2bootstrap.js",
     "package.json",
     "parts",
-    "README.md"
+    "README.md",
+    "images"
   ]
 }

@@ -4,6 +4,14 @@
 
 Converts a markdown file to a bootstrap-styled web page with a table of contents. It will figure out sections based on the headings used and calculate section numbers.
 
+From this:
+
+![Markdown file](images/markdown.png)
+
+To this:
+
+![Bootstrap web page](images/bootstrap.png)
+
 # Installing
 
     $ npm install markdown2bootstrap
