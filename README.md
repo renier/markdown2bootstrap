@@ -1,47 +1,32 @@
-<!-- title: markdown2bootstrap.js -->
-<!-- subtitle: Converts a markdown document to an html web page using bootstrap styling. -->
-# Description
+# [markdown2bootstrapのコードブロックが残念だったので修正した - Qiita](http://qiita.com/tukiyo3/items/2243ea8c17fcdf2b6d10)
 
-Converts a markdown file to a bootstrap-styled web page with a table of contents. It will figure out sections based on the headings used and calculate section numbers.
+markdown2bootstrapのコードブロックが残念だったので修正した
 
-From this:
+ちょっと頑張ったけど全然ダメな箇所もあって力尽きた。
 
-![Markdown file](https://raw.github.com/renier/markdown2bootstrap/master/images/markdown.png)
+* [成果物 download](https://github.com/tukiyo/markdown2bootstrap)
 
-To this:
+## 修正内容
 
-![Bootstrap web page](https://raw.github.com/renier/markdown2bootstrap/master/images/bootstrap.png)
+![before_after.png](https://qiita-image-store.s3.amazonaws.com/0/25728/fc8c1652-949c-1df2-2696-faf266f578ef.png "before_after.png")
 
-# Installing
 
-    $ npm install markdown2bootstrap
 
-# Usage
+# オリジナルの使い方
 
-    $ node_modules/.bin/markdown2bootstrap doc1.md doc2.md ...
-    Converted doc1.md to doc1.html
-    Converted doc2.md to doc2.html
-    ...
-    $ cp -a node_modules/markdown2bootstrap/bootstrap ./
+* [renier/markdown2bootstrap](https://github.com/renier/markdown2bootstrap)
 
-Notice that you can convert multiple files by specifying them on the command line.
+```bash:インストール
+npm install markdown2bootstrap
+```
 
-Now open `doc1.html` in a web browser. You will notice that section numbers are automatically added along with a floating table of contents bootstrap-style. If you want to **turn off section numbering** use the `-n` option:
+```bash:markdown->html変換
+cp -a node_modules/markdown2bootstrap/bootstrap .
+node_modules/.bin/markdown2bootstrap doc1.md
+```
 
-    $ node_modules/.bin/markdown2bootstrap -n doc.md
+doc1.htmlが生成される。
 
-The table of contents will still be created.
-
-You can also **turn on a bootstrap page header** by passing `-h`. The header uses a title and a subtitle. You can specify them in the markdown document like this:
-
-        <!-- title: This is a title -->
-        <!-- subtitle: This is a subtitle -->
-
-You should at least specify a title to give the webpage a proper html `<title>` tag.
-
-## Output
-
-The converted files are created in the current directory by default with an extension of `.html`. You can specify a different output directory by using the `--outputdir` option:
-
-    $ node_modules/.bin/markdown2bootstrap --outputdir html doc.md
-    Converted  doc.md to html/doc.html
+```bash:タイトルを付けたい場合
+node_modules/.bin/markdown2bootstrap -h true doc1.md
+```
