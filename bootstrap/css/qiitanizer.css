@@ -1,0 +1,7 @@
+/* コードブロックでQiitaのタイトル書式対応 */
+.code_title>span {
+	font-size:xx-small;
+	background-color:rgba(0,0,0,0.07);
+	padding:1px 2px;
+}
+/* ```lang:title END */
